@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picvario DAM — порядок в контенте</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f9fafc;
+            color: #1a1f2e;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        section {
+            padding: 70px 0;
+            border-bottom: 1px solid #eaeef2;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h1 {
+            font-size: 48px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            letter-spacing: -0.01em;
+        }
+
+        h3 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #4a5263;
+            max-width: 700px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #0056d2;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 16px 40px;
+            border-radius: 40px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 8px 20px rgba(0,86,210,0.2);
+        }
+
+        .btn:hover {
+            background-color: #0041a0;
+        }
+
+        .grid-2, .grid-3, .grid-4 {
+            display: grid;
+            gap: 30px;
+        }
+
+        .grid-2 { grid-template-columns: repeat(2,1fr); }
+        .grid-3 { grid-template-columns: repeat(3,1fr); }
+        .grid-4 { grid-template-columns: repeat(4,1fr); }
+
+        .card {
+            background: white;
+            border-radius: 24px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+            border: 1px solid #edf2f7;
+        }
+
+        .icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .comparison-table {
+            background: white;
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+        }
+
+        .comparison-row {
+            display: flex;
+            border-bottom: 1px solid #edf2f7;
+        }
+
+        .comparison-row:last-child {
+            border-bottom: none;
+        }
+
+        .comp-item {
+            flex: 1;
+            padding: 20px 24px;
+            font-size: 16px;
+        }
+
+        .comp-item:first-child {
+            background-color: #f7f9fc;
+            font-weight: 500;
+            border-right: 1px solid #edf2f7;
+        }
+
+        .checklist {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            border: 1px solid #edf2f7;
+        }
+
+        .question {
+            padding: 20px 0;
+            border-bottom: 1px solid #eef2f6;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+
+        .question:last-child {
+            border-bottom: none;
+        }
+
+        .question-text {
+            font-size: 18px;
+            font-weight: 500;
+            max-width: 70%;
+        }
+
+        .question-buttons button {
+            background: none;
+            border: 2px solid #d0d9e8;
+            padding: 10px 30px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 12px;
+            cursor: pointer;
+            transition: all 0.1s;
+        }
+
+        .question-buttons button.selected-yes {
+            background-color: #0056d2;
+            border-color: #0056d2;
+            color: white;
+        }
+
+        .question-buttons button.selected-no {
+            background-color: #e5e9f0;
+            border-color: #a0aec0;
+            color: #1a1f2e;
+        }
+
+        .result-block {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 20px;
+            background: #f0f4fe;
+            font-size: 18px;
+            display: none;
+        }
+
+        .result-block.show {
+            display: block;
+        }
+
+        .result-title {
+            font-weight: 700;
+            font-size: 22px;
+            margin-bottom: 8px;
+        }
+
+        .footer-contacts {
+            background: #1a1f2e;
+            color: white;
+            border-radius: 40px;
+            padding: 40px;
+            text-align: center;
+        }
+
+        .footer-contacts a {
+            color: #90b4f5;
+            text-decoration: none;
+            font-size: 20px;
+            display: inline-block;
+            margin: 10px;
+        }
+
+        @media (max-width: 900px) {
+            h1 { font-size: 40px; }
+            h2 { font-size: 30px; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .question { flex-direction: column; align-items: flex-start; }
+            .question-text { max-width: 100%; margin-bottom: 12px; }
+            .question-buttons { width: 100%; display: flex; gap: 10px; }
+            .question-buttons button { flex: 1; margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Экран 1: Главный -->
+<section>
+    <div class="container">
+        <h1>Порядок в контенте — <br>порядок в бизнесе</h1>
+        <p style="font-size: 22px; margin-bottom: 40px;">Picvario — единый медиабанк для всех ваших файлов. Фото, видео, презентации, документы, аудио — всё в одном месте. Больше никаких «скиньте файл» и «где это лежит?».</p>
+        <a href="#checklist" class="btn">Навести порядок</a>
+        <div style="margin-top: 40px; background: #eef2f6; border-radius: 20px; padding: 30px; text-align: center; color: #2d3748;">
+            ⚡ Поддерживаем любые форматы: JPG, RAW, PDF, DOCX, MP4, MP3 и другие. Для всех файлов — автоматические превью.
+        </div>
+    </div>
+</section>
+
+<!-- Экран 2: Для кого -->
+<section>
+    <div class="container">
+        <h2>Кто в компании скажет Picvario спасибо?</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="icon">📣</div>
+                <h3>PR и коммуникации</h3>
+                <p>Мгновенный доступ к фото с мероприятий. Поиск по лицам спикеров. Можно открыть портал для СМИ — журналисты сами скачают материалы.</p>
+            </div>
+            <div class="card">
+                <div class="icon">📈</div>
+                <h3>Маркетинг и реклама</h3>
+                <p>Все макеты, логотипы и видео в одном месте. Контроль версий — всегда актуальный брендбук. Никакого старого логотипа на новом баннере.</p>
+            </div>
+            <div class="card">
+                <div class="icon">💼</div>
+                <h3>Продажи</h3>
+                <p>Свежие презентации и каталоги под рукой. Отправили ссылку клиенту — и он сам скачает коммерческое предложение.</p>
+            </div>
+            <div class="card">
+                <div class="icon">👥</div>
+                <h3>HR и внутренние коммуникации</h3>
+                <p>Фото с корпоративов, обучающие ролики, документы для сотрудников — всё organised.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🎨</div>
+                <h3>Создатели контента</h3>
+                <p>Быстрый поиск своих работ, версионность, комментарии прямо на макете.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Экран 3: Как это работает + сравнение с облаком -->
+<section>
+    <div class="container">
+        <h2>Это не просто папка в облаке. Это умный помощник.</h2>
+        <div class="grid-2" style="margin-bottom: 40px;">
+            <div class="card">
+                <div class="icon">📤</div>
+                <h3>1. Загружайте</h3>
+                <p>Любые файлы — от RAW‑фото до PDF‑документов. Picvario сам создаст красивые миниатюры, чтобы вы сразу видели, что внутри.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🏷️</div>
+                <h3>2. Описывайте (или доверьтесь ИИ)</h3>
+                <p>Система сама распознаёт лица, объекты, эмоции и даже текст в документах. Написали «отчёт за 2024» — нашли.</p>
+            </div>
+            <div class="card">
+                <div class="icon">🔍</div>
+                <h3>3. Находите и делитесь</h3>
+                <p>Ищите по любому слову. Открывайте доступ партнёрам или прессе на отдельные подборки. Смотрите статистику скачиваний.</p>
+            </div>
+        </div>
+
+        <!-- Сравнение с облаком (короткая таблица) -->
+        <div style="background: white; border-radius: 24px; padding: 30px; border: 1px solid #edf2f7;">
+            <h3 style="margin-top: 0;">Чем Picvario лучше обычного облака?</h3>
+            <div class="comparison-table">
+                <div class="comparison-row">
+                    <div class="comp-item">Обычное облако</div>
+                    <div class="comp-item">Picvario DAM</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comp-item">Ищет только по названию файла</div>
+                    <div class="comp-item">Ищет по содержимому, лицам, эмоциям (даже если файл назывался «IMG_4785»)</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comp-item">Версии плодятся: «финал_2(1)_готовое»</div>
+                    <div class="comp-item">Автоматический контроль версий — всегда последняя</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comp-item">Для документов — только иконка</div>
+                    <div class="comp-item">Для любых файлов — удобное превью (видео, PDF, RAW)</div>
+                </div>
+                <div class="comparison-row">
+                    <div class="comp-item">Доступ либо есть у всех, либо ни у кого</div>
+                    <div class="comp-item">Гибкие права: кому-то только просмотр, кому-то редактирование</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Экран 4: Интерактивный чек-лист -->
+<section id="checklist">
+    <div class="container">
+        <h2>Проверьте себя за минуту</h2>
+        <p style="margin-bottom: 30px;">Ответьте на 7 вопросов — и сразу узнайте, пора ли вам задуматься о DAM-системе.</p>
+
+        <div class="checklist" id="checklist-app">
+            <!-- вопросы будут генерироваться из js, но для простоты сверстаем вручную и добавим data атрибуты -->
+            <div class="question" data-index="0">
+                <span class="question-text">1. Ваш объём цифровых файлов растёт с каждым месяцем?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="1">
+                <span class="question-text">2. Вы когда-нибудь искали файл больше 10 минут?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="2">
+                <span class="question-text">3. PR, маркетинг и продажи используют много разных каналов и часто путаются в материалах?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="3">
+                <span class="question-text">4. Бывало, что файл использовали без разрешения или с истёкшими правами?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="4">
+                <span class="question-text">5. Вы работаете с подрядчиками, фотографами и сложно контролировать доступ?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="5">
+                <span class="question-text">6. Коллеги постоянно просят «скинь логотип», «скинь фото с ивента»?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="6">
+                <span class="question-text">7. Ваши файлы хранятся где попало: в мессенджерах, на дисках, в почте?</span>
+                <div class="question-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+
+            <div style="margin-top: 30px; text-align: center;">
+                <button class="btn" id="checklist-submit" style="padding: 14px 40px;">Узнать результат</button>
+            </div>
+
+            <div id="checklist-result" class="result-block">
+                <div class="result-title" id="result-title"></div>
+                <p id="result-text"></p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Экран 5: Кейсы -->
+<section>
+    <div class="container">
+        <h2>Реальные примеры — лучший аргумент</h2>
+        <div class="grid-3">
+            <div class="card">
+                <h3>⚽ ФК «Спартак»</h3>
+                <p>18 000 файлов. Поиск по лицам игроков для СМИ. Монетизация фото.</p>
+            </div>
+            <div class="card">
+                <h3>☢️ «Страна Росатом»</h3>
+                <p>Цифровой пресс-центр. 20 000 просмотров в месяц от журналистов.</p>
+            </div>
+            <div class="card">
+                <h3>🏛️ «СенатИнформ»</h3>
+                <p>Парламентский фотоархив. Более 240 СМИ скачивают до 1000 фото в день.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Экран 6: Призыв к действию -->
+<section>
+    <div class="container">
+        <div class="footer-contacts">
+            <h2 style="color: white; margin-bottom: 20px;">Порядок начинается с одного клика</h2>
+            <p style="color: #cbd5e0; font-size: 18px; margin-bottom: 30px;">Оставьте заявку — мы покажем Picvario в деле. Бесплатный тест‑драйв на 14 дней без привязки карты. Загрузите свои файлы и увидите, как легко ими управлять.</p>
+            <div style="margin: 30px 0;">
+                <a href="#" class="btn" style="background-color: white; color: #0056d2; box-shadow: none;">Хочу порядок</a>
+            </div>
+            <div style="margin-top: 30px;">
+                <a href="tel:+79255859480">+7 925 585-94-80</a>
+                <a href="mailto:berlin@picvario.com">berlin@picvario.com</a>
+                <p style="color: #90b4f5; margin-top: 20px;">Валентин Берлин</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    (function() {
+        // Чек-лист: логика подсчета ответов
+        const questions = document.querySelectorAll('.question');
+        const submitBtn = document.getElementById('checklist-submit');
+        const resultBlock = document.getElementById('checklist-result');
+        const resultTitle = document.getElementById('result-title');
+        const resultText = document.getElementById('result-text');
+
+        // массив ответов (true = да, false = нет, null = нет ответа)
+        let answers = new Array(questions.length).fill(null);
+
+        // обработчики для каждой кнопки
+        questions.forEach((q, idx) => {
+            const yesBtn = q.querySelector('.yes-btn');
+            const noBtn = q.querySelector('.no-btn');
+
+            const setSelected = (value) => {
+                // сбросить классы
+                yesBtn.classList.remove('selected-yes');
+                noBtn.classList.remove('selected-no');
+                if (value === true) {
+                    yesBtn.classList.add('selected-yes');
+                    answers[idx] = true;
+                } else if (value === false) {
+                    noBtn.classList.add('selected-no');
+                    answers[idx] = false;
+                }
+            };
+
+            yesBtn.addEventListener('click', () => setSelected(true));
+            noBtn.addEventListener('click', () => setSelected(false));
+        });
+
+        submitBtn.addEventListener('click', () => {
+            // считаем количество ответов "Да"
+            let yesCount = 0;
+            let answeredCount = 0;
+            answers.forEach(a => {
+                if (a !== null) {
+                    answeredCount++;
+                    if (a === true) yesCount++;
+                }
+            });
+
+            if (answeredCount === 0) {
+                resultTitle.innerText = 'Вы не ответили ни на один вопрос';
+                resultText.innerText = 'Пожалуйста, выберите ответы хотя бы на несколько вопросов.';
+                resultBlock.classList.add('show');
+                return;
+            }
+
+            let title = '';
+            let text = '';
+
+            if (yesCount <= 2) {
+                title = '✅ 0–2 «Да»: У вас пока порядок.';
+                text = 'Но когда контента станет больше, Picvario поможет не утонуть. Просто имейте нас в виду.';
+            } else if (yesCount <= 5) {
+                title = '⚠️ 3–5 «Да»: Вы уже чувствуете нагрузку.';
+                text = 'Сейчас вы справляетесь, но через полгода поиск файлов будет съедать половину рабочего дня. Самое время попробовать Picvario бесплатно.';
+            } else {
+                title = '🔥 6–7 «Да»: Хаос в контенте тормозит бизнес.';
+                text = 'Оставьте заявку — наведём порядок за один день. Мы поможем организовать ваш медиабанк.';
+            }
+
+            resultTitle.innerText = title;
+            resultText.innerText = text;
+            resultBlock.classList.add('show');
+        });
+
+        // Для красоты: можно предзаполнить пару ответов для демо? Не будем.
+    })();
+</script>
+
+<!-- Дополнительные штрихи: подвал не нужен -->
+<footer style="text-align: center; padding: 20px; color: #aaa;">
+    Picvario — экосистема решений для работы с цифровым контентом
+</footer>
+
+</body>
+</html>
