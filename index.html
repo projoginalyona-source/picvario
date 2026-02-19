@@ -1,1 +1,708 @@
-<!-- Content of index.html from commit 2357be160eb4eb10c3942892e726271d8ec84084 -->
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Picvario DAM — управление цифровым контентом</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 32px;
+        }
+
+        section {
+            padding: 80px 0;
+            border-bottom: 1px solid #e9edf2;
+        }
+
+        section:last-child {
+            border-bottom: none;
+        }
+
+        h1 {
+            font-size: 52px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            line-height: 1.1;
+            margin-bottom: 24px;
+        }
+
+        h2 {
+            font-size: 40px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            margin-bottom: 40px;
+        }
+
+        h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        p, li {
+            font-size: 18px;
+            color: #334155;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: #0f3b99;
+            color: white;
+            font-weight: 600;
+            font-size: 18px;
+            padding: 14px 36px;
+            border-radius: 40px;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            box-shadow: 0 4px 12px rgba(15, 59, 153, 0.2);
+            margin-right: 16px;
+            margin-bottom: 16px;
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: #0f3b99;
+            border: 2px solid #0f3b99;
+            box-shadow: none;
+        }
+
+        .btn:hover {
+            background-color: #0a2a6b;
+        }
+
+        .btn-outline:hover {
+            background-color: #eef4ff;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .card {
+            background: #f8fafd;
+            border-radius: 24px;
+            padding: 32px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .badge {
+            background: #e0e7ff;
+            color: #0f3b99;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 16px;
+            display: inline-block;
+        }
+
+        .icon-large {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Comparison table */
+        .comp-grid {
+            display: flex;
+            flex-wrap: wrap;
+            border: 1px solid #e2e8f0;
+            border-radius: 24px;
+            overflow: hidden;
+            background: white;
+        }
+        .comp-col {
+            flex: 1 1 200px;
+            padding: 20px;
+        }
+        .comp-col:first-child {
+            background-color: #f1f5f9;
+            font-weight: 500;
+        }
+        .comp-row {
+            display: contents;
+        }
+        .comp-item {
+            padding: 16px 20px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .comp-header {
+            background-color: #f1f5f9;
+            font-weight: 600;
+        }
+
+        /* Квиз */
+        .quiz-box {
+            background: white;
+            border-radius: 32px;
+            padding: 40px;
+            border: 1px solid #e2e8f0;
+        }
+        .question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #edf2f7;
+            flex-wrap: wrap;
+        }
+        .question:last-child {
+            border-bottom: none;
+        }
+        .q-text {
+            font-size: 18px;
+            font-weight: 500;
+            max-width: 70%;
+        }
+        .q-buttons button {
+            background: none;
+            border: 2px solid #cbd5e1;
+            padding: 8px 24px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+        .q-buttons button.selected-yes {
+            background-color: #0f3b99;
+            border-color: #0f3b99;
+            color: white;
+        }
+        .q-buttons button.selected-no {
+            background-color: #e2e8f0;
+            border-color: #94a3b8;
+        }
+        .quiz-result {
+            margin-top: 30px;
+            padding: 25px;
+            border-radius: 24px;
+            background: #eef4ff;
+            display: none;
+        }
+        .quiz-result.show {
+            display: block;
+        }
+
+        /* Адаптивность */
+        @media (max-width: 1000px) {
+            h1 { font-size: 44px; }
+            h2 { font-size: 34px; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .question { flex-direction: column; align-items: flex-start; }
+            .q-text { max-width: 100%; margin-bottom: 12px; }
+            .q-buttons { width: 100%; display: flex; gap: 12px; }
+            .q-buttons button { flex: 1; margin-left: 0; }
+        }
+        @media (max-width: 600px) {
+            section { padding: 60px 0; }
+            h1 { font-size: 36px; }
+            .btn { display: block; width: 100%; margin-right: 0; }
+        }
+
+        /* списки галочек */
+        .check-list {
+            list-style: none;
+            padding: 0;
+        }
+        .check-list li {
+            padding-left: 30px;
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .check-list li::before {
+            content: "✓";
+            color: #0f3b99;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .stats {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .stat-item {
+            font-size: 18px;
+        }
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #0f3b99;
+        }
+
+        /* для списка интеграций */
+        .tag-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 10px;
+        }
+        .tag {
+            background: #eef4ff;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 16px;
+        }
+        .faq-item {
+            margin-bottom: 30px;
+        }
+        .faq-question {
+            font-weight: 700;
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Блок 1. Hero (без изменений) -->
+<section>
+    <div class="container">
+        <h1>Управляйте цифровым контентом без хаоса, рисков и потерь</h1>
+        <p style="font-size: 22px; max-width: 800px; margin-bottom: 40px;">Picvario DAM — российская платформа для хранения, поиска, согласования и безопасного распространения фото, видео, документов и бренд-материалов. Найдите любой файл за секунды. Контролируйте версии. Защитите репутацию компании.</p>
+        <div>
+            <a href="#" class="btn">Получить демо за 30 минут</a>
+            <a href="#" class="btn btn-outline">Запросить консультацию</a>
+        </div>
+        <div style="margin-top: 40px; display: flex; gap: 30px; flex-wrap: wrap;">
+            <span class="badge">85+ компаний-клиентов</span>
+            <span class="badge">99,5% SLA</span>
+            <span class="badge">В реестре российского ПО</span>
+        </div>
+    </div>
+</section>
+
+<!-- Блок 2. Проблема -->
+<section>
+    <div class="container">
+        <h2>Когда контента становится больше 5 000 файлов — начинается хаос</h2>
+        <div class="grid-2">
+            <div>
+                <ul class="check-list" style="font-size: 18px;">
+                    <li>Файлы лежат в папках, мессенджерах и почте</li>
+                    <li>Поиск занимает 10–20 минут</li>
+                    <li>Используются устаревшие версии</li>
+                    <li>Нарушаются лицензии</li>
+                    <li>Публикуются несогласованные материалы</li>
+                    <li>Маркетинг и продажи работают с разными версиями</li>
+                </ul>
+            </div>
+            <div>
+                <p style="background: #f1f5f9; padding: 30px; border-radius: 24px;"><strong>Каждый месяц компания теряет десятки часов рабочего времени</strong> — и даже не замечает этого.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок 3. Решение -->
+<section>
+    <div class="container">
+        <h2>Picvario — это не облако. Это система управления цифровыми активами (DAM)</h2>
+        <p style="font-size: 20px; margin-bottom: 40px;">Единый медиабанк для:</p>
+        <div class="grid-4">
+            <div class="card" style="text-align: center;"><span style="font-size: 40px;">📸</span><br>Фото</div>
+            <div class="card" style="text-align: center;"><span style="font-size: 40px;">🎬</span><br>Видео</div>
+            <div class="card" style="text-align: center;"><span style="font-size: 40px;">📄</span><br>Документов</div>
+            <div class="card" style="text-align: center;"><span style="font-size: 40px;">🎨</span><br>Бренд-материалов</div>
+            <div class="card" style="text-align: center;"><span style="font-size: 40px;">📊</span><br>Презентаций</div>
+            <div class="card" style="text-align: center;"><span style="font-size: 40px;">🎵</span><br>Аудио</div>
+        </div>
+        <p style="margin-top: 30px;">Контент управляется по мировым стандартам EXIF, IPTC, XMP и адаптируется под ваши бизнес-процессы.</p>
+    </div>
+</section>
+
+<!-- Блок 4. Найдите любой файл за секунды -->
+<section>
+    <div class="container">
+        <h2>Найдите любой файл за секунды</h2>
+        <div class="grid-2">
+            <div>
+                <p style="font-size: 22px; font-weight: 500;">Умный поиск на естественном языке</p>
+                <p style="background: #eef4ff; padding: 12px 20px; border-radius: 100px; margin: 20px 0;">Например: «женщина в шляпе у озера»</p>
+                <ul class="check-list">
+                    <li>поиск по лицам, объектам, эмоциям</li>
+                    <li>по содержимому PDF</li>
+                    <li>по статусу согласования и метаданным</li>
+                </ul>
+            </div>
+            <div>
+                <p><strong>ИИ автоматически:</strong> создаёт теги, генерирует описание, переводит метаданные на 30+ языков, устраняет дубликаты.</p>
+                <p style="margin-top: 20px; font-weight: 600;">Результат: минус 40–60% времени на поиск.</p>
+                <a href="#" class="btn btn-outline" style="margin-top: 20px;">Посмотреть, как это работает</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок 5. Совместная работа без хаоса -->
+<section>
+    <div class="container">
+        <h2>Совместная работа без хаоса</h2>
+        <div class="grid-3">
+            <div class="card">💬 Комментарии к фото, видео и документам</div>
+            <div class="card">📍 Аннотации к областям изображения</div>
+            <div class="card">✅ Статусы согласования</div>
+            <div class="card">🔒 Блокировка редактирования</div>
+            <div class="card">📌 Контроль версий</div>
+        </div>
+        <p style="margin-top: 30px; font-weight: 500;">Сократите цикл согласования контента в 2–3 раза.</p>
+    </div>
+</section>
+
+<!-- Блок 6 (ранее безопасность) УДАЛЁН -->
+<!-- Блок 7. Почему не Google Drive? остаётся -->
+<section>
+    <div class="container">
+        <h2>Почему не Google Drive?</h2>
+        <div style="border: 1px solid #e2e8f0; border-radius: 24px; overflow-x: auto;">
+            <table style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr style="background: #f1f5f9;">
+                        <th style="padding: 20px; text-align: left;">Облачное хранилище</th>
+                        <th style="padding: 20px; text-align: left;">Picvario DAM</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Поиск по названию</td><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Поиск по лицам, объектам, содержимому</td></tr>
+                    <tr><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Нет ИИ</td><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Автотегирование и автоописание</td></tr>
+                    <tr><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Папочная структура</td><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Категории, коллекции, статусы</td></tr>
+                    <tr><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Ограниченные права</td><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Гибкое разграничение доступа</td></tr>
+                    <tr><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Нет публичных порталов</td><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Порталы для СМИ и партнёров</td></tr>
+                    <tr><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Нет управления лицензиями</td><td style="padding: 16px 20px; border-top: 1px solid #e2e8f0;">Контроль прав и сроков</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p style="margin-top: 30px; font-size: 20px;">Облако хранит файлы. <strong>Picvario управляет ими.</strong></p>
+    </div>
+</section>
+
+<!-- НОВЫЙ БЛОК: Модели развёртывания -->
+<section>
+    <div class="container">
+        <h2>Модели развёртывания</h2>
+        <p style="font-size: 20px; margin-bottom: 40px;">Выберите вариант, который подходит вашему бизнесу</p>
+        <div class="grid-3">
+            <div class="card">
+                <h3>SaaS в K2 Cloud</h3>
+                <ul class="check-list" style="margin-top: 15px;">
+                    <li>Быстрый старт без серверов</li>
+                    <li>Автоматические обновления</li>
+                    <li>Оплата по подписке</li>
+                    <li>SLA 99,95%</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>Выделенный инстанс</h3>
+                <ul class="check-list">
+                    <li>Полный контроль ресурсов</li>
+                    <li>Кастомизация</li>
+                    <li>Высокая производительность</li>
+                    <li>Изоляция данных</li>
+                </ul>
+            </div>
+            <div class="card">
+                <h3>On-premise / Гибрид</h3>
+                <ul class="check-list">
+                    <li>Установка в вашем контуре</li>
+                    <li>Интеграция с IT-инфраструктурой</li>
+                    <li>Поддержка K2 Cloud</li>
+                    <li>Для режимных организаций</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- НОВЫЙ БЛОК: Enterprise‑безопасность и интеграции -->
+<section>
+    <div class="container">
+        <h2>Enterprise‑безопасность и интеграции</h2>
+        <div class="grid-2">
+            <div>
+                <h3>Интеграции с корпоративными системами</h3>
+                <div class="tag-list">
+                    <span class="tag">Active Directory</span>
+                    <span class="tag">LDAP</span>
+                    <span class="tag">SSO (SAML)</span>
+                    <span class="tag">ADFS</span>
+                    <span class="tag">1C</span>
+                    <span class="tag">CRM</span>
+                    <span class="tag">CMS</span>
+                    <span class="tag">FTP</span>
+                    <span class="tag">S3</span>
+                    <span class="tag">Google Drive</span>
+                    <span class="tag">OneDrive</span>
+                    <span class="tag">REST API</span>
+                </div>
+            </div>
+            <div>
+                <h3>Безопасность и соответствие</h3>
+                <ul class="check-list">
+                    <li>Хранение в российских дата-центрах Tier III (K2 Cloud)</li>
+                    <li>Шифрование данных</li>
+                    <li>Соответствие 152-ФЗ</li>
+                    <li>Аудит действий пользователей</li>
+                    <li>Гибкие права доступа</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок 8. Кому особенно подходит (бывший блок 8) -->
+<section>
+    <div class="container">
+        <h2>Кому особенно подходит</h2>
+        <div class="grid-3">
+            <div class="card"><h3>📣 PR и внешние коммуникации</h3>Цифровой пресс-центр, работа со СМИ, контроль публикаций.</div>
+            <div class="card"><h3>📈 Маркетинг</h3>Единый бренд-центр, актуальные версии, быстрое масштабирование.</div>
+            <div class="card"><h3>💼 Продажи</h3>Актуальные каталоги, быстрая отправка клиентам, контроль материалов.</div>
+            <div class="card"><h3>👥 HR</h3>Архив мероприятий, учебные материалы, сертификаты и документы.</div>
+            <div class="card"><h3>🖥️ IT</h3>Централизация, безопасность, интеграции через API.</div>
+        </div>
+    </div>
+</section>
+
+<!-- Блок 9. Кейсы УДАЛЁН -->
+
+<!-- Блок 10. Квиз — диагностика зрелости -->
+<section>
+    <div class="container">
+        <h2>Нужна ли вам DAM уже сейчас?</h2>
+        <p style="margin-bottom: 30px;">Ответьте на 7 вопросов.</p>
+        <div class="quiz-box" id="quiz">
+            <!-- вопросы (те же) -->
+            <div class="question" data-index="0">
+                <span class="q-text">1. Ваш объём цифровых файлов растёт с каждым месяцем?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="1">
+                <span class="q-text">2. Вы когда-нибудь искали файл больше 10 минут?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="2">
+                <span class="q-text">3. PR, маркетинг и продажи используют много разных каналов и часто путаются в материалах?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="3">
+                <span class="q-text">4. Бывало, что файл использовали без разрешения или с истёкшими правами?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="4">
+                <span class="q-text">5. Вы работаете с подрядчиками, фотографами и сложно контролировать доступ?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="5">
+                <span class="q-text">6. Коллеги постоянно просят «скинь логотип», «скинь фото с ивента»?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="6">
+                <span class="q-text">7. Ваши файлы хранятся где попало: в мессенджерах, на дисках, в почте?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" id="quiz-submit">Узнать результат</button>
+            </div>
+            <div id="quiz-result" class="quiz-result">
+                <div id="result-title" style="font-size: 24px; font-weight: 700; margin-bottom: 10px;"></div>
+                <p id="result-text"></p>
+                <div style="margin-top: 20px;">
+                    <a href="#" class="btn" style="padding: 10px 24px;">Получить рекомендации</a>
+                    <a href="#" class="btn-outline btn" style="padding: 10px 24px;">Записаться на консультацию</a>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 20px; font-style: italic;">Если у вас много «Да», не переживайте — почти каждая растущая компания проходит через этот этап.</p>
+    </div>
+</section>
+
+<!-- Блок 11. Интеграции и масштабируемость (был) -->
+<section>
+    <div class="container">
+        <h2>Интеграции и масштабируемость</h2>
+        <div class="grid-2">
+            <ul class="check-list">
+                <li>Документированный API</li>
+                <li>CMS и ERP-интеграции</li>
+                <li>Встраивание в другие системы</li>
+                <li>Подключение S3, FTP, облаков</li>
+                <li>Интеграции с фотостоками</li>
+            </ul>
+            <p>Picvario масштабируется вместе с бизнесом.</p>
+        </div>
+    </div>
+</section>
+
+<!-- НОВЫЙ БЛОК: Часто задаваемые вопросы -->
+<section>
+    <div class="container">
+        <h2>Часто задаваемые вопросы</h2>
+        <div class="faq-item">
+            <div class="faq-question">Какие форматы файлов поддерживаются?</div>
+            <p>Любые: изображения (JPEG, TIFF, PNG, PSD, RAW), видео (MP4, MOV, AVI, MXF), аудио, документы (PDF, Office), архивы.</p>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Сколько пользователей может работать одновременно?</div>
+            <p>Ограничений нет — система горизонтально масштабируется. Одновременно могут работать тысячи пользователей, всё зависит от тарифа и схемы развёртывания.</p>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Как обеспечивается защита данных?</div>
+            <p>Дата-центры Tier III с физической защитой, шифрование при передаче и хранении, регулярное резервирование, разграничение доступа, соответствие 152-ФЗ.</p>
+        </div>
+        <div class="faq-item">
+            <div class="faq-question">Возможна ли интеграция с 1С и CRM?</div>
+            <p>Да, через REST API и готовые модули. Также поддерживаются любые корпоративные системы: Active Directory, CRM, CMS и т.д.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Блок 12. О компании -->
+<section>
+    <div class="container">
+        <h2>О компании</h2>
+        <div class="stats">
+            <div class="stat-item"><span class="stat-number">85</span> компаний-клиентов</div>
+            <div class="stat-item"><span class="stat-number">9.1</span> уровень удовлетворённости</div>
+            <div class="stat-item"><span class="stat-number">99,5%</span> SLA</div>
+            <div class="stat-item"><span class="stat-number">5 лет</span> на рынке</div>
+        </div>
+        <p style="margin-top: 30px;">Picvario — российская платформа для работы с цифровым контентом.</p>
+    </div>
+</section>
+
+<!-- Финальный CTA -->
+<section style="background: #f1f5f9; border-bottom: none;">
+    <div class="container" style="text-align: center;">
+        <h2 style="margin-bottom: 20px;">Порядок начинается с одного решения</h2>
+        <p style="font-size: 20px; max-width: 700px; margin: 0 auto 40px;">Посмотрите, как Picvario решит ваши задачи. Персональное демо, разбор процессов, ответы по безопасности, расчёт стоимости.</p>
+        <a href="#" class="btn">Записаться на встречу</a>
+        <p style="margin-top: 30px; font-size: 24px; font-weight: 500;">+7 925 585-94-80</p>
+    </div>
+</section>
+
+<!-- скрипт квиза -->
+<script>
+    (function(){
+        const questions = document.querySelectorAll('.question');
+        const submitBtn = document.getElementById('quiz-submit');
+        const resultDiv = document.getElementById('quiz-result');
+        const resultTitle = document.getElementById('result-title');
+        const resultText = document.getElementById('result-text');
+
+        let answers = new Array(questions.length).fill(null);
+
+        questions.forEach((q, idx) => {
+            const yesBtn = q.querySelector('.yes-btn');
+            const noBtn = q.querySelector('.no-btn');
+
+            const setSelected = (value) => {
+                yesBtn.classList.remove('selected-yes');
+                noBtn.classList.remove('selected-no');
+                if (value === true) {
+                    yesBtn.classList.add('selected-yes');
+                    answers[idx] = true;
+                } else if (value === false) {
+                    noBtn.classList.add('selected-no');
+                    answers[idx] = false;
+                }
+            };
+
+            yesBtn.addEventListener('click', () => setSelected(true));
+            noBtn.addEventListener('click', () => setSelected(false));
+        });
+
+        submitBtn.addEventListener('click', () => {
+            let yesCount = 0;
+            let answered = 0;
+            answers.forEach(a => {
+                if (a !== null) {
+                    answered++;
+                    if (a === true) yesCount++;
+                }
+            });
+
+            if (answered === 0) {
+                resultTitle.innerText = 'Вы не ответили ни на один вопрос';
+                resultText.innerText = 'Пожалуйста, выберите ответы.';
+                resultDiv.classList.add('show');
+                return;
+            }
+
+            let title = '', text = '';
+            if (yesCount < 3) {
+                title = '🟢 Менее 3 «Да»';
+                text = 'Пока масштаб позволяет справляться без специализированной системы. Но лучше заранее продумать стратегию управления.';
+            } else if (yesCount <= 5) {
+                title = '🟡 3–5 «Да»';
+                text = 'Нагрузка уже ощущается. Сейчас самое время подготовиться к росту и выстроить процессы.';
+            } else {
+                title = '🔴 Более 5 «Да»';
+                text = 'Контента уже много, и хаос начинает тормозить бизнес. Нужна консультация, чтобы выстроить систему и снизить риски.';
+            }
+
+            resultTitle.innerText = title;
+            resultText.innerText = text;
+            resultDiv.classList.add('show');
+        });
+    })();
+</script>
+
+<!-- футер -->
+<footer style="padding: 24px; text-align: center; color: #64748b;">
+    Picvario — экосистема решений для цифрового контента
+</footer>
+</body>
+</html>
