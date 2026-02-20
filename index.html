@@ -405,6 +405,105 @@
             color: var(--text-secondary);
         }
 
+        /* Единый медиабанк — три карточки (Медиа, Документы, Бренд-материалы) */
+        .mediabank-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+        .mediabank-card {
+            background: var(--bg-white);
+            border-radius: var(--radius-24);
+            padding: 28px 24px 24px;
+            border: 1px solid var(--border-base);
+            box-shadow: var(--shadow-xs);
+            position: relative;
+        }
+        .mediabank-card__header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+            padding-bottom: 16px;
+            border-bottom: 1px dashed var(--border-secondary);
+        }
+        .mediabank-card__icon {
+            width: 40px;
+            height: 40px;
+            flex-shrink: 0;
+            color: var(--bg-brand);
+        }
+        .mediabank-card__title {
+            font-weight: 600;
+            font-size: 20px;
+            line-height: 26px;
+            color: var(--text-base);
+        }
+        .mediabank-item {
+            margin-bottom: 18px;
+        }
+        .mediabank-item:last-of-type {
+            margin-bottom: 0;
+        }
+        .mediabank-item__head {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 4px;
+        }
+        .mediabank-item__icon {
+            width: 20px;
+            height: 20px;
+            flex-shrink: 0;
+            color: var(--bg-brand);
+        }
+        .mediabank-item__title {
+            font-weight: 600;
+            font-size: var(--text-size-m);
+            line-height: var(--text-size-m-lh);
+            color: var(--text-base);
+        }
+        .mediabank-item__tags {
+            display: inline-flex;
+            gap: 6px;
+            margin-left: 4px;
+        }
+        .mediabank-item__tag {
+            font-size: 11px;
+            line-height: 16px;
+            font-weight: 500;
+            padding: 2px 8px;
+            border-radius: var(--radius-full);
+            background: var(--bg-control-hover);
+            color: var(--text-base);
+        }
+        .mediabank-item__desc {
+            font-size: var(--text-size-s);
+            line-height: var(--text-size-s-lh);
+            color: var(--text-secondary);
+            padding-left: 28px;
+        }
+        .mediabank-card__footer {
+            margin-top: 20px;
+            padding-top: 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: var(--text-size-s);
+            color: var(--text-tertiary);
+        }
+        .mediabank-card__footer-icon {
+            width: 14px;
+            height: 14px;
+            color: var(--bg-brand);
+            flex-shrink: 0;
+        }
+        @media (max-width: 1000px) {
+            .mediabank-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* Flip card */
         .flip-card {
             background: transparent;
@@ -929,14 +1028,14 @@
                     <span class="hero-block__caption-icon" aria-hidden="true"></span>
                     Picvario
                 </div>
-                <h1 class="hero-block__product-name">Управляйте цифровым контентом без хаоса, рисков и потерь</h1>
+                <h1 class="hero-block__product-name">Умное хранилище K2 Облако</h1>
                 <p class="hero-block__desc">Picvario DAM — российская платформа для хранения, поиска, согласования и безопасного распространения фото, видео и бренд-материалов. Найдите любой файл за секунды. Контролируйте версии.</p>
                 <div class="hero-block__actions">
                     <a href="#" class="btn">Получить демо на 14 дней</a>
                     <a href="#" class="btn btn-outline">Запросить консультацию</a>
                 </div>
                 <div class="hero-block__badges">
-                    <span class="badge">185+ крупных компаний-клиентов</span>
+                    <span class="badge">100+ крупных компаний-клиентов</span>
                     <span class="badge">99,95% SLA</span>
                     <span class="badge">В реестре российского ПО</span>
                 </div>
@@ -990,7 +1089,7 @@
 <!-- Блок 2. Проблема -->
 <section>
     <div class="container">
-        <h2>Когда контента становится больше 5 000 файлов — начинается хаос</h2>
+        <h2>Когда контента становится больше 2 000 файлов — начинается хаос</h2>
         <div class="grid-2">
             <div>
                 <ul class="check-list cross-list text-lead">
@@ -1009,35 +1108,172 @@
     </div>
 </section>
 
+<!-- Блок 10. Квиз — диагностика зрелости -->
+<section>
+    <div class="container">
+        <h2>Проверьте себя за минуту</h2>
+        <p style="margin-bottom: 30px;">Ответьте на 7 вопросов — и сразу узнайте, пора ли вам задуматься о DAM-системе.</p>
+        <div class="quiz-box" id="quiz">
+            <!-- вопросы (те же) -->
+            <div class="question" data-index="0">
+                <span class="q-text">1. Ваш объём цифровых файлов растёт с каждым месяцем?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="1">
+                <span class="q-text">2. Вы когда-нибудь искали файл больше 10 минут?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="2">
+                <span class="q-text">3. PR, маркетинг и продажи используют много разных каналов и часто путаются в материалах?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="3">
+                <span class="q-text">4. Бывало, что файл использовали без разрешения или с истёкшими правами?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="4">
+                <span class="q-text">5. Вы работаете с подрядчиками, фотографами и сложно контролировать доступ?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="5">
+                <span class="q-text">6. Коллеги постоянно просят «скинь логотип», «скинь фото с ивента»?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div class="question" data-index="6">
+                <span class="q-text">7. Ваши файлы хранятся где попало: в мессенджерах, на дисках, в почте?</span>
+                <div class="q-buttons">
+                    <button class="yes-btn">Да</button>
+                    <button class="no-btn">Нет</button>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <button class="btn" id="quiz-submit">Узнать результат</button>
+            </div>
+            <div id="quiz-result" class="quiz-result">
+                <div id="result-title" class="text-value" style="font-size: var(--text-size-lead); line-height: var(--text-size-lead-lh); font-weight: 600; margin-bottom: 10px;"></div>
+                <p id="result-text"></p>
+                <div id="quiz-result-buttons" style="margin-top: 20px;">
+                    <a href="#" class="btn btn--s">Получить демо-доступ</a>
+                    <a href="#" class="btn btn-outline btn--s">Записаться на консультацию</a>
+                </div>
+            </div>
+        </div>
+        <p style="margin-top: 20px; font-style: italic;">Если у вас много «Да», не переживайте — почти каждая растущая компания проходит через этот этап.</p>
+    </div>
+</section>
+
 <!-- Блок 3. Решение -->
 <section>
     <div class="container">
-        <h2>Picvario — это не облако. Это система управления цифровыми активами (DAM)</h2>
+        <h2>Умное хранилище k2 это не просто облако. Это система управления цифровыми активами (DAM)</h2>
         <p class="text-lead" style="margin-bottom: 40px;">Единый медиабанк для:</p>
-        <div class="grid-4">
-            <div class="card">
-                <div class="card__title">Фото</div>
-                <p class="card__desc">Хранение и поиск по снимкам, метаданные и права использования.</p>
+        <div class="mediabank-grid">
+            <div class="mediabank-card">
+                <div class="mediabank-card__header">
+                    <svg class="mediabank-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" stroke-width="2"/><path d="M10 8v8l6-4z"/></svg>
+                    <h3 class="mediabank-card__title">Медиа</h3>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span class="mediabank-item__title">Фото</span>
+                    </div>
+                    <p class="mediabank-item__desc">Хранение и поиск по снимкам, метаданные и права использования.</p>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 4c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H6c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2h12zM9.5 16.5v-9l7 4.5-7 4.5z"/></svg>
+                        <span class="mediabank-item__title">Видео</span>
+                    </div>
+                    <p class="mediabank-item__desc">Медиабанк роликов, превью и поиск по содержимому.</p>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3v10.55c-.59-.34-1.27-.55-2-.55-2.21 0-4 1.79-4 4s1.79 4 4 4 4-1.79 4-4V7h4V3h-6z"/></svg>
+                        <span class="mediabank-item__title">Аудио</span>
+                    </div>
+                    <p class="mediabank-item__desc">Подкасты, джинглы, озвучки с тегами и поиском.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card__title">Видео</div>
-                <p class="card__desc">Медиабанк роликов, превью и поиск по содержимому.</p>
+            <div class="mediabank-card">
+                <div class="mediabank-card__header">
+                    <svg class="mediabank-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+                    <h3 class="mediabank-card__title">Документы</h3>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm-1 2l5 5h-5V4zm-2 10H8v-2h3v2zm0-3H8v-2h3v2zm0-3H8V9h3v2z"/></svg>
+                        <span class="mediabank-item__title">Текстовые</span>
+                        <span class="mediabank-item__tags">
+                            <span class="mediabank-item__tag">ПРАЙСЫ</span>
+                            <span class="mediabank-item__tag">ДОГОВОРЫ</span>
+                        </span>
+                    </div>
+                    <p class="mediabank-item__desc">Единый доступ и версии. Прайс-листы, договоры, спецификации.</p>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+                        <span class="mediabank-item__title">Таблицы</span>
+                    </div>
+                    <p class="mediabank-item__desc">Финансовые модели, отчёты, базы данных, аналитика в структурированном виде.</p>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+                        <span class="mediabank-item__title">Презентации</span>
+                    </div>
+                    <p class="mediabank-item__desc">Актуальные слайды для продаж и маркетинга в одном месте.</p>
+                </div>
             </div>
-            <div class="card">
-                <div class="card__title">Документы</div>
-                <p class="card__desc">Презентации, прайсы, договоры — единый доступ и версии.</p>
-            </div>
-            <div class="card">
-                <div class="card__title">Бренд-материалы</div>
-                <p class="card__desc">Логотипы, гайды, макеты с контролем согласования.</p>
-            </div>
-            <div class="card">
-                <div class="card__title">Презентации</div>
-                <p class="card__desc">Актуальные слайды для продаж и маркетинга в одном месте.</p>
-            </div>
-            <div class="card">
-                <div class="card__title">Аудио</div>
-                <p class="card__desc">Подкасты, джинглы, озвучки с тегами и поиском.</p>
+            <div class="mediabank-card">
+                <div class="mediabank-card__header">
+                    <svg class="mediabank-card__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 22C6.49 22 2 17.51 2 12S6.49 2 12 2s10 4.04 10 9c0 3.31-2.69 6-6 6h-1.77c-.28 0-.5.22-.5.5 0 .12.05.23.13.31.47.47 1.07 1.21 1.07 2.19 0 .78-.63 1.41-1.41 1.41-.54 0-1.07-.24-1.43-.65-.27-.32-.06-.79.38-.79h.66c2.76 0 5-2.24 5-5 .36-4.31-3.36-7.87-7.57-7.87zM7.5 10c-.83 0-1.5-.67-1.5-1.5S6.67 7 7.5 7 9 7.67 9 8.5 8.33 10 7.5 10zm5 0c-.83 0-1.5-.67-1.5-1.5S11.67 7 12.5 7s1.5.67 1.5 1.5S13.33 10 12.5 10zm-2.5 4c-.83 0-1.5-.67-1.5-1.5S9.17 11 10 11s1.5.67 1.5 1.5S10.83 14 10 14z"/></svg>
+                    <h3 class="mediabank-card__title">Бренд-материалы</h3>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/><path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z"/></svg>
+                        <span class="mediabank-item__title">Логотипы</span>
+                    </div>
+                    <p class="mediabank-item__desc">Все версии логотипов (вектор/растр), с контролем согласования и сроками действия.</p>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M18 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zM6 4h5v8l-2.5-1.5L6 12V4z"/></svg>
+                        <span class="mediabank-item__title">Гайды</span>
+                    </div>
+                    <p class="mediabank-item__desc">Брендбуки, руководства по фирменному стилю, цвета, шрифты, правила использования.</p>
+                </div>
+                <div class="mediabank-item">
+                    <div class="mediabank-item__head">
+                        <svg class="mediabank-item__icon" viewBox="0 0 24 24" fill="currentColor"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75 1.84-1.83zM3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25z"/></svg>
+                        <span class="mediabank-item__title">Макеты</span>
+                    </div>
+                    <p class="mediabank-item__desc">Шаблоны презентаций, рекламные макеты с версионностью и историей согласования.</p>
+                </div>
+                <div class="mediabank-card__footer">
+                    <svg class="mediabank-card__footer-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm3.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                    <span>контроль версий</span>
+                </div>
             </div>
         </div>
         <p style="margin-top: 30px;">Контент управляется по мировым стандартам EXIF, IPTC, XMP и адаптируется под ваши бизнес-процессы.</p>
@@ -1113,7 +1349,7 @@
 <!-- Блок 7. Чем Picvario лучше обычного облака? остаётся -->
 <section>
     <div class="container">
-        <h2>Чем Picvario лучше обычного облака?</h2>
+        <h2>Умное хранилище K2 или обычный диск в облаке — в чем разница?</h2>
         <div style="border: 1px solid var(--border-base); border-radius: var(--radius-24); overflow-x: auto;">
             <table class="table-compare">
                 <thead>
@@ -1201,78 +1437,6 @@
 </section>
 
 <!-- Блок 9. Кейсы УДАЛЁН -->
-
-<!-- Блок 10. Квиз — диагностика зрелости -->
-<section>
-    <div class="container">
-        <h2>Проверьте себя за минуту</h2>
-        <p style="margin-bottom: 30px;">Ответьте на 7 вопросов — и сразу узнайте, пора ли вам задуматься о DAM-системе.</p>
-        <div class="quiz-box" id="quiz">
-            <!-- вопросы (те же) -->
-            <div class="question" data-index="0">
-                <span class="q-text">1. Ваш объём цифровых файлов растёт с каждым месяцем?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div class="question" data-index="1">
-                <span class="q-text">2. Вы когда-нибудь искали файл больше 10 минут?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div class="question" data-index="2">
-                <span class="q-text">3. PR, маркетинг и продажи используют много разных каналов и часто путаются в материалах?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div class="question" data-index="3">
-                <span class="q-text">4. Бывало, что файл использовали без разрешения или с истёкшими правами?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div class="question" data-index="4">
-                <span class="q-text">5. Вы работаете с подрядчиками, фотографами и сложно контролировать доступ?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div class="question" data-index="5">
-                <span class="q-text">6. Коллеги постоянно просят «скинь логотип», «скинь фото с ивента»?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div class="question" data-index="6">
-                <span class="q-text">7. Ваши файлы хранятся где попало: в мессенджерах, на дисках, в почте?</span>
-                <div class="q-buttons">
-                    <button class="yes-btn">Да</button>
-                    <button class="no-btn">Нет</button>
-                </div>
-            </div>
-            <div style="text-align: center; margin-top: 30px;">
-                <button class="btn" id="quiz-submit">Узнать результат</button>
-            </div>
-            <div id="quiz-result" class="quiz-result">
-                <div id="result-title" class="text-value" style="font-size: var(--text-size-lead); line-height: var(--text-size-lead-lh); font-weight: 600; margin-bottom: 10px;"></div>
-                <p id="result-text"></p>
-                <div id="quiz-result-buttons" style="margin-top: 20px;">
-                    <a href="#" class="btn btn--s">Получить демо-доступ</a>
-                    <a href="#" class="btn btn-outline btn--s">Записаться на консультацию</a>
-                </div>
-            </div>
-        </div>
-        <p style="margin-top: 20px; font-style: italic;">Если у вас много «Да», не переживайте — почти каждая растущая компания проходит через этот этап.</p>
-    </div>
-</section>
 
 <!-- НОВЫЙ БЛОК: Часто задаваемые вопросы -->
 <section>
